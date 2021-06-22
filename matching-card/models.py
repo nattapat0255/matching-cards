@@ -18,7 +18,6 @@ class Card(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     game_id = Column(Integer, ForeignKey("games.id"))
-    position = Column(Integer, index=True)
     value = Column(Integer, index=True)
     shown = Column(Boolean, default=False)
     correct = Column(Boolean, default=False)
