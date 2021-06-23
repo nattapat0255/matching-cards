@@ -7,7 +7,7 @@ Matching Card is a memory based game. Remember what as on each card and where it
 2. Clone this repository on the virtual machine
 3. CD to the main folder
 4. Run ```docker-compose up --build```
-5. Expose 80 from the server and 5432 form the database
+5. Expose 80 from the server
 
 ### Gallery
 
