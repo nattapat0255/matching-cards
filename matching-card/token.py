@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
-from sqlalchemy.sql.functions import user
 from . import schemas
 
 SECRET_KEY = "1c0bf51ad7eba3a423359375b7d6132a964ec7e6f90cc7ef44d5bc60e51bcc82"
@@ -18,9 +17,10 @@ def create_access_token(data: dict):
 def verity_token(token: str, credentials_exception):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
+        username: str = payload.get("username")
+        id: int = payload.get("id")
         if username is None:
             raise credentials_exception
-        return schemas.TokenData(username=username)
+        return schemas.TokenData(id=id, username=username)
     except JWTError:
         raise credentials_exception

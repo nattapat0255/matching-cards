@@ -7,7 +7,7 @@ get_db = database.get_db
 
 router = APIRouter(
     tags=['Users'],
-    prefix="/users"
+    prefix="/api/v1/users"
 )
 
 @router.post('', status_code=status.HTTP_201_CREATED, response_model=schemas.ShowUser)

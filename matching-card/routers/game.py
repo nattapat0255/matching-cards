@@ -7,7 +7,7 @@ get_db = database.get_db
 
 router = APIRouter(
     tags=['Matching Card Game'],
-    prefix="/game")
+    prefix="/api/v1/game")
 
 @router.get('', status_code=status.HTTP_201_CREATED, response_model=schemas.Game)
 def new_game(db: Session = Depends(get_db), 
@@ -18,7 +18,7 @@ def new_game(db: Session = Depends(get_db),
 def select_card(request: schemas.CardSelect, 
                 db: Session = Depends(get_db), 
                 current_user: schemas.User = Depends(oauth2.get_current_user)):
-    return game.choose(request, db)
+    return game.choose(current_user, request, db)
 
 @router.get('/highscore', status_code=status.HTTP_200_OK, response_model=schemas.ShowGameHighScore)
 def get_word_record(db: Session = Depends(get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):

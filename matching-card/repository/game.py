@@ -7,11 +7,12 @@ import random
 DECK_LIST = [1,1,2,2,3,3,4,4,5,5,6,6]
   
 def create(current_user: schemas.User, db: Session):
-    game_room = db.query(models.Game).filter_by(player_name = current_user.username, active = True).first()
+    db_user = models.User(id = current_user.id)
+    game_room = db.query(models.Game).filter_by(player_id = db_user.id, active = True).first()
     if game_room:
         game_room.active = False
         db.commit()
-    db_game = models.Game(player_name=current_user.username)
+    db_game = models.Game(player_id = current_user.id)
     db.add(db_game)
     db.commit()
     cards = DECK_LIST
@@ -23,8 +24,8 @@ def create(current_user: schemas.User, db: Session):
     db.refresh(db_game)
     return db_game
 
-def choose(request: schemas.CardSelect, db: Session):
-    game_room = db.query(models.Game).filter_by(id = request.game_id, active = True).first()
+def choose(current_user: schemas.User, request: schemas.CardSelect, db: Session):
+    game_room = db.query(models.Game).filter_by(id = request.game_id, player_id=current_user.id, active = True).first()
     if not game_room:
         raise HTTPException(status_code=404, detail="Not Found Game Room")
     
@@ -84,9 +85,19 @@ def game_over(db, game_room):
     }
 
 def get_highscore(current_user: schemas.User, db: Session):
-    game_room = db.query(models.Game).filter_by(player_name = current_user.username, solved= True).order_by(models.Game.clicks).first()
-    return game_room
+    game_room = db.query(models.Game).filter_by(player_id = current_user.id, solved= True).order_by(models.Game.clicks).first()
+    if game_room:
+        return game_room
+    else:
+        return {
+            "clicks": 0
+        }
 
 def get_worldrecord(db: Session):
     game_room = db.query(models.Game).filter_by(solved= True).order_by(models.Game.clicks).first()
-    return game_room
+    if game_room:
+        return game_room
+    else:
+        return {
+            "clicks": 0
+        }

@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.sql.functions import mode
 from . import token, schemas, models
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/v1/login")
 
 def get_current_user(data: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(

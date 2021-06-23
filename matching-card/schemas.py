@@ -10,15 +10,16 @@ class Token(BaseModel):
     token_type: str
 
 class TokenData(BaseModel):
+    id: Optional[int] = None
     username: Optional[str] = None
     
 class User(BaseModel):
-    name:str
+    username:str
     email:str
     password:str
     
 class ShowUser(BaseModel):
-    name:str
+    username:str
     email:str
     
     class Config():
@@ -26,7 +27,6 @@ class ShowUser(BaseModel):
         
 class Game(BaseModel):
     id:int
-    player_name:str
     clicks:int
     
     class Config():

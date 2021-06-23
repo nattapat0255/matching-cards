@@ -1,9 +1,10 @@
 fastapi
 uvicorn
 sqlalchemy
-passlib
 bcrypt
+passlib
+python-jose
+python-multipart
 async-exit-stack
 async-generator
-python_jose
-python-multipart
+psycopg2

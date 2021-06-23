@@ -6,7 +6,8 @@ class Game(Base):
     __tablename__ = "games"
     
     id = Column(Integer, primary_key=True, index=True)
-    player_name = Column(String)
+    # player_name = Column(String)
+    player_id = Column(Integer, ForeignKey("users.id"))
     clicks = Column(Integer, index=True, default=0)
     active = Column(Boolean, default=True)
     solved = Column(Boolean, default=False)
@@ -26,6 +27,8 @@ class User(Base):
     __tablename__ = 'users'
     
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
+    username = Column(String)
     email = Column(String)
     password = Column(String)
+    
+    games = relationship("Game")
