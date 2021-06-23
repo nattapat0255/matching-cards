@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  fastapi:
+    container_name: fastapi
+    build: .
+    command: uvicorn matching-card.main:app --host 0.0.0.0 --port 80
+    volumes:
+      - .:/usr/src/matching-card
+    ports:
+      - 80:80
+    depends_on:
+      - db
+
+  db:
+    image: postgres:12.0-alpine
+    container_name: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=fastapi
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres_data:

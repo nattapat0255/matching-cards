@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+sqlalchemy
+bcrypt
+passlib
+python-jose
+python-multipart
+async-exit-stack
+async-generator
+psycopg2
